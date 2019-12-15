@@ -44,12 +44,14 @@ export default function ConfirmationDialog (props) {
             style={{ justifyContent: 'space-between', marginTop: '7px' }}
           >
             <DeltaButtonDanger
+              tabIndex={1}
               noPadding
               onClick={() => yesIsDanger ? onClick(true) : onClick(false)}
             >
               { yesIsDanger ? tx('yes') : tx('no') }
             </DeltaButtonDanger>
             <DeltaButtonPrimary
+              tabIndex={2}
               noPadding
               onClick={() => yesIsDanger ? onClick(false) : onClick(true)}
               style={{ marginLeft: '90px' }}

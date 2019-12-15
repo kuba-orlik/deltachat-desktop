@@ -15,7 +15,7 @@ export const DeltaButton = styled.p`
   border-style: solid;
   border-color: transparent;
   border-radius: 2px;
-  &:hover {
+  &:hover, &:focus {
     cursor: pointer;
     background-color: #f1f1f1;
   }

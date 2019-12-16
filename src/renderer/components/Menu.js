@@ -50,40 +50,40 @@ export default function DeltaMenu (props) {
     } = selectedChat
 
     chatMenu = [
-      <Menu.Divider />,
+      <Menu.Divider key='1' />,
       showArchivedChats
         ? <MenuItem icon='export' text={tx('menu_unarchive_chat')}
-          onClick={() => onArchiveChat(false)} />
+          onClick={() => onArchiveChat(false)} key='2' />
         : <MenuItem icon='import' text={tx('menu_archive_chat')}
-          onClick={() => onArchiveChat(true)} />,
+          onClick={() => onArchiveChat(true)} key='3' />,
       <MenuItem
         icon='delete'
         text={tx('menu_delete_chat')}
-        onClick={onDeleteChat} />,
+        onClick={onDeleteChat} key='4' />,
       !isGroup && !isDeviceChat && <MenuItem
         icon='lock'
         text={tx('encryption_info_desktop')}
-        onClick={onEncrInfo} />,
+        onClick={onEncrInfo} key='5' />,
       isGroup && selfInGroup && <>
         <MenuItem
           icon='edit'
           text={tx('menu_edit_group')}
-          onClick={onEditGroup}
+          onClick={onEditGroup} key='6'
         />
         <MenuItem
           icon='log-out' text={tx('menu_leave_group')}
-          onClick={onLeaveGroup}
+          onClick={onLeaveGroup} key='7'
         />
       </>,
       !isGroup && !(isSelfTalk || isDeviceChat) && <MenuItem
         icon='blocked-person'
         text={tx('menu_block_contact')}
-        onClick={onBlockContact}
+        onClick={onBlockContact} key='8'
       />,
-      <Menu.Divider />
+      <Menu.Divider key='9' />
     ]
   } else {
-    chatMenu = <Menu.Divider />
+    chatMenu = <Menu.Divider key='1' />
   }
 
   return (<Menu>

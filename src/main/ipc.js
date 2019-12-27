@@ -250,6 +250,11 @@ function init (cwd, state, logHandler) {
     })
   })
 
+  ipcMain.on('oauth', async (e, url) => {
+    console.log(url)
+    await require('./windows').oauth.doAuth(url)
+  })
+
   function sendStateToRenderer () {
     log.debug('RENDER')
     const deltachat = dcController.getState()

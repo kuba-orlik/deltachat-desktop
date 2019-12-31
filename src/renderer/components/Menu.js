@@ -39,6 +39,7 @@ export default function DeltaMenu (props) {
   const onDeleteChat = () => openDeleteChatDialog(screenContext, selectedChat)
   const onUnblockContacts = () => screenContext.openDialog('UnblockContacts', {})
   const onContactRequests = () => chatStoreDispatch({ type: 'SELECT_CHAT', payload: C.DC_CHAT_ID_DEADDROP })
+  const onEphermeralMessage = () => screenContext.openDialog('EphermeralMessage', { selectedChat })
   const logout = () => {
     if (selectedChat) {
       chatStoreDispatch({ type: 'UI_UNSELECT_CHAT' })
@@ -90,6 +91,11 @@ export default function DeltaMenu (props) {
         icon='blocked-person'
         text={tx('menu_block_contact')}
         onClick={onBlockContact}
+      />,
+      <MenuItem
+        icon='blocked-person'
+        text={'Ephermeral Message'} // TODO: Translate
+        onClick={onEphermeralMessage}
       />,
       <Menu.Divider />
     ]

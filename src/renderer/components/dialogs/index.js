@@ -16,6 +16,7 @@ import MapDialog from './MapDialog'
 import QrInviteCode from './QrInviteCode'
 import ConfirmationDialog from './ConfirmationDialog'
 import UnblockContacts from './UnblockContacts'
+import EphermeralMessage from './EphermeralMessage'
 
 export const allDialogs = [
   DeadDrop,
@@ -35,7 +36,8 @@ export const allDialogs = [
   QrInviteCode,
   ConfirmationDialog,
   UnblockContacts,
-  ViewProfile
+  ViewProfile,
+  EphermeralMessage
 ]
 
 const log = require('../../../logger').getLogger('renderer/dialogs')

@@ -75,4 +75,12 @@ module.exports = class DCChat extends SplitOut {
   markNoticedChat (chatId) {
     this._dc.markNoticedChat(chatId)
   }
+
+  getChatAutodeleteTimer (chatId) {
+    return this._dc.getChatAutodeleteTimer(chatId)
+  }
+
+  setChatAutodeleteTimer (chatId, timer) {
+    return this._dc.setChatAutodeleteTimer(chatId, timer)
+  }
 }

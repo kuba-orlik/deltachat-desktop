@@ -22,7 +22,7 @@ const welcomeMessage = 'Select a chat or create a new chat'
 
 const runAppSession = (name, tests) => {
   describe(name, function () {
-    before(function async() {
+    before(function async () {
       chaiAsPromised.transferPromiseness = app.transferPromiseness
       return app.start().then(() => {
         domHelper.init(app)

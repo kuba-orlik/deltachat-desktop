@@ -38,7 +38,7 @@ function gitHubLicenseUrl () {
 function windowDefaults () {
   const headerHeight = 38
   const messageHeight = 100
-  let page = 'main.html'
+  let page = 'test.html'
   if (process.env.NODE_ENV === 'test') {
     page = 'test.html'
   }

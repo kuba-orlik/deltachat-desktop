@@ -1,9 +1,9 @@
 import { ClientFunction, Selector } from 'testcafe'
-import { waitForReact, ReactSelector } from 'testcafe-react-selectors'
+// import { waitForReact, ReactSelector } from 'testcafe-react-selectors'
 
 const getPageTitle = ClientFunction(() => document.title)
-const chatNameSelector = Selector('.bp3-navbar-heading')
-const getChatName = () => chatNameSelector().innerText
+const headlineSelector = Selector('h2')
+const getHeadline = () => headlineSelector().innerText
 
 const scriptContent = `
 window.addEventListener('DOMContentLoaded', function () {
@@ -19,7 +19,7 @@ test('shows correct page title', async t => {
 })
 
 test('shows correct headline', async t => {
-  await t.expect(getChatName()).eql('Welcome to Delta Chat')
+  await t.expect(getHeadline()).eql('Testcafe')
 })
 
 // fixture `Electron test`.page('../../static/test.html')

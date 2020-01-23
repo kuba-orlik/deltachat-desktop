@@ -38,7 +38,8 @@ const ipc = require('./ipc')
 const menu = require('./menu')
 const State = require('./state')
 const windows = require('./windows')
-const devTools = require('./devtools')
+
+const { tryInstallReactDevTools } = require('./setup')
 
 app.ipcReady = false
 app.isQuitting = false
@@ -161,7 +162,7 @@ app.on('web-contents-created', (e, contents) => {
 })
 
 app.once('ready', () => {
-  devTools.tryInstallReactDevTools()
+  tryInstallReactDevTools()
   session.defaultSession.webRequest.onHeadersReceived((details, fun) => {
     fun({
       responseHeaders: {

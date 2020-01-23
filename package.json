@@ -163,6 +163,15 @@
     },
     "files": [
       "!node_modules/deltachat-node/deltachat-core${/*}"
+    ],
+    "protocols": [
+      {
+        "name": "QR code data",
+        "role": "Viewer",
+        "schemes": [
+          "openpgp4fpr"
+        ]
+      }
     ]
   }
 }

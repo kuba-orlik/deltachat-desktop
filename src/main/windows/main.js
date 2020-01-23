@@ -58,8 +58,8 @@ function init (app, options) {
 
   win.loadURL(defaults.main)
 
-  app.on('second-instance', () => {
-    log.debug('Someone tried to run a second instance')
+  app.on('second-instance', (_, argv) => {
+    log.debug('Someone tried to run a second instance', argv)
     if (win) {
       if (win.isMinimized()) win.show()
       win.focus()

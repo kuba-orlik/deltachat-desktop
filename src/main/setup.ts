@@ -19,3 +19,17 @@ export async function tryInstallReactDevTools() {
 }
 
 
+export function registerURISchemes(app: import('electron').App) {
+    if (process.platform === 'linux') {
+        // Linux systems use the desktop file instead
+        return;
+    }
+    const log = getLogger('setup/uri-schemes')
+    if (!app.isDefaultProtocolClient('openpgp4fpr')) {
+        if (app.setAsDefaultProtocolClient('openpgp4fpr')) {
+            log.info('Successfuly registered uri-handler for "openpgp4fpr"')
+        } else {
+            log.warn('Could not register uri-handler for "openpgp4fpr"')
+        }
+    }
+}

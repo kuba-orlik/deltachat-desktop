@@ -39,7 +39,7 @@ const menu = require('./menu')
 const State = require('./state')
 const windows = require('./windows')
 
-const { tryInstallReactDevTools } = require('./setup')
+const { tryInstallReactDevTools, registerURISchemes } = require('./setup')
 
 app.ipcReady = false
 app.isQuitting = false
@@ -163,6 +163,7 @@ app.on('web-contents-created', (e, contents) => {
 
 app.once('ready', () => {
   tryInstallReactDevTools()
+  registerURISchemes(app)
   session.defaultSession.webRequest.onHeadersReceived((details, fun) => {
     fun({
       responseHeaders: {
@@ -171,4 +172,9 @@ app.once('ready', () => {
       }
     })
   })
+})
+
+app.on('open-url', (ev, url) => {
+  ev.preventDefault()
+  log.info('Open URL', url)
 })

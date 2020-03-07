@@ -1,32 +1,36 @@
-const { DeltaChat } = require('deltachat-node')
-const log = require('../../shared/logger').getLogger('main/deltachat/login')
-const setupNotifications = require('../notifications')
-const setupUnreadBadgeCounter = require('../unread-badge')
-const { setupMarkseenFix } = require('../markseenFix')
-const { app } = require('electron')
-
+import { DeltaChat } from 'deltachat-node'
+import { app } from 'electron'
+import logger from '../../shared/logger'
+import { setupMarkseenFix } from '../markseenFix'
+import setupNotifications from '../notifications'
+import setupUnreadBadgeCounter from '../unread-badge'
 import SplitOut from './splitout'
-module.exports = class DCLoginController extends SplitOut {
+import DeltaChatController from './controller'
+const log = logger.getLogger('main/deltachat/login')
+
+export default class DCLoginController extends SplitOut {
   /**
    * Called when this controller is created and when current
    * locale changes
    */
-  setCoreStrings(strings) {
+  setCoreStrings(strings: { [key: number]: string }) {
     if (!this._dc) return
 
     Object.keys(strings).forEach(key => {
-      this._dc.setStockTranslation(Number(key), strings[key])
+      this._dc.setStockTranslation(Number(key), strings[Number(key)])
     })
 
     this._controller._sendStateToRenderer()
   }
 
   login(
-    accountDir,
-    credentials,
-    sendStateToRenderer,
-    coreStrings,
-    updateConfiguration
+    accountDir: string,
+    credentials: any,
+    sendStateToRenderer: typeof DeltaChatController.prototype._sendStateToRenderer,
+    coreStrings: Parameters<
+      typeof DCLoginController.prototype.setCoreStrings
+    >[0],
+    updateConfiguration = false
   ) {
     // Creates a separate DB file for each login
     this._controller.accountDir = accountDir
@@ -44,7 +48,7 @@ module.exports = class DCLoginController extends SplitOut {
       return
     }
 
-    this._dc.open(this._controller.accountDir, err => {
+    this._dc.open(this._controller.accountDir, (err: any) => {
       if (err) throw err
       this.setCoreStrings(coreStrings)
       const onReady = () => {
@@ -59,14 +63,14 @@ module.exports = class DCLoginController extends SplitOut {
       if (!this._dc.isConfigured() || updateConfiguration) {
         this._dc.once('ready', onReady)
         this._controller.configuring = true
-        this._dc.configure(this.addServerFlags(credentials))
+        this._dc.configure(this.addServerFlags(credentials), undefined)
         sendStateToRenderer()
       } else {
         onReady()
       }
     })
     this._controller.registerEventHandler(dc)
-    setupNotifications(this._controller, app.state.saved)
+    setupNotifications(this._controller, (app as any).state.saved)
     setupUnreadBadgeCounter(this._controller)
     setupMarkseenFix(this._controller)
   }
@@ -81,7 +85,10 @@ module.exports = class DCLoginController extends SplitOut {
       this._controller._sendStateToRenderer()
   }
 
-  configure(credentials, cb) {
+  configure(
+    credentials: any,
+    cb: Parameters<typeof DeltaChat.prototype.configure>[1]
+  ) {
     this._controller.configuring = true
     this._dc.configure(this.addServerFlags(credentials), cb)
   }
@@ -92,7 +99,7 @@ module.exports = class DCLoginController extends SplitOut {
     this._controller._dc = null
   }
 
-  addServerFlags(credentials) {
+  addServerFlags(credentials: any) {
     return Object.assign({}, credentials, {
       server_flags: this._controller.settings.serverFlags(credentials),
     })
@@ -117,7 +124,7 @@ We are happy to announce version 1.0.0 release of DeltaChat Desktop! 🎉This re
 - new users will use Ed25519 keys (shorter & better cryptographic keys)            
 
 Full changelog: https://github.com/deltachat/deltachat-desktop/blob/master/CHANGELOG.md#10000---2020-02-22
-    `
+    ` as any
     )
   }
 }
